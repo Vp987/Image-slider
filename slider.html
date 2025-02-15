@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Image Slider</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>Image Slider Gallery</h1>
+
+    <div class="slider-container">
+        <div class="slider-wrapper">
+            <div class="slider">
+                <img src="Image1.jpeg" class="slide" alt="Machu Picchu" data-caption="Machu Picchu" data-description="A breathtaking view of the ancient Inca city.">
+                <img src="Image2.jpeg" class="slide" alt="Eiffel Tower" data-caption="Eiffel Tower" data-description="A mesmerizing evening in Paris.">
+                <img src="Image3.jpeg" class="slide" alt="Grand Canyon" data-caption="Grand Canyon" data-description="A stunning view of the Grand Canyon at sunset.">
+                <img src="Image4.jpeg" class="slide" alt="Santorini" data-caption="Santorini" data-description="The beautiful white and blue city of Santorini, Greece.">
+                <img src="Image5.jpeg" class="slide" alt="Qutub Minar" data-caption="Qutub Minar" data-description="A historic minaret located in Delhi, India.">
+                <img src="Image6.jpeg" class="slide" alt="Colosseum" data-caption="Colosseum" data-description="The iconic ancient Roman amphitheater in Rome, Italy.">
+                <img src="Image7.jpeg" class="slide" alt="Hawa Mahal" data-caption="Hawa Mahal" data-description="The stunning 'Palace of Winds' in Jaipur, India.">
+                <img src="Image8.jpeg" class="slide" alt="London Bridge" data-caption="London Bridge" data-description="A famous bridge spanning the River Thames in London.">
+            </div>
+        </div>
+
+        <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+        <button class="next" onclick="moveSlide(1)">&#10095;</button>
+
+        <!-- Caption and Description -->
+        <div class="caption-box">
+            <h2 id="caption">Machu Picchu</h2>
+            <p id="description">A breathtaking view of the ancient Inca city.</p>
+        </div>
+    </div>
+        <!-- Thumbnail Navigation -->
+        <div class="thumbnail-container">
+            <img src="Image1.jpeg" class="thumbnail" onclick="selectSlide(0)" alt="Machu Picchu">
+            <img src="Image2.jpeg" class="thumbnail" onclick="selectSlide(1)" alt="Eiffel Tower">
+            <img src="Image3.jpeg" class="thumbnail" onclick="selectSlide(2)" alt="Grand Canyon">
+            <img src="Image4.jpeg" class="thumbnail" onclick="selectSlide(3)" alt="Santorini">
+            <img src="Image5.jpeg" class="thumbnail" onclick="selectSlide(4)" alt="Qutub Minar">
+            <img src="Image6.jpeg" class="thumbnail" onclick="selectSlide(5)" alt="Colosseum">
+            <img src="Image7.jpeg" class="thumbnail" onclick="selectSlide(6)" alt="Hawa Mahal">
+            <img src="Image8.jpeg" class="thumbnail" onclick="selectSlide(7)" alt="London Bridge">
+        </div>
+    
+
+    <script>
+        let slideIndex = 0;
+        const slides = document.querySelectorAll(".slide");
+        const caption = document.getElementById("caption");
+        const description = document.getElementById("description");
+        const thumbnails = document.querySelectorAll(".thumbnail");
+
+        function showSlide(index) {
+            if (index >= slides.length) slideIndex = 0;
+            if (index < 0) slideIndex = slides.length - 1;
+
+            slides.forEach((slide, i) => {
+                slide.style.display = "none";
+                slide.style.opacity = i === slideIndex ? "1" : "0.5"; 
+            });
+
+            slides[slideIndex].style.display = "block";
+            caption.innerText = slides[slideIndex].getAttribute("data-caption");
+            description.innerText = slides[slideIndex].getAttribute("data-description");
+
+            thumbnails.forEach(thumb => thumb.classList.remove("active"));
+            thumbnails[slideIndex].classList.add("active");
+        }
+
+        function moveSlide(n) {
+            slideIndex += n;
+            showSlide(slideIndex);
+        }
+
+        function selectSlide(index) {
+            slideIndex = index;
+            showSlide(slideIndex);
+        }
+
+        function autoSlide() {
+            moveSlide(1);
+            setTimeout(autoSlide, 5000); 
+        }
+
+        showSlide(slideIndex);
+        setTimeout(autoSlide, 8000);
+    </script>
+
+</body>
+</html>
